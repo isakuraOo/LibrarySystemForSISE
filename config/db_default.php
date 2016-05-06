@@ -11,5 +11,5 @@ return [
     // 数据库字符集
     'charset' => 'utf8',
     // 数据库表名前缀，如果没有可以去掉这一行
-    'tablePrefix' => ''
+    'tablePrefix' => 'libsys_'
 ];

@@ -1,17 +1,17 @@
 /*
  Navicat Premium Data Transfer
 
- Source Server         : localhost
- Source Server Type    : MySQL
- Source Server Version : 50711
- Source Host           : localhost
+ Source Server         : libsys
+ Source Server Type    : MariaDB
+ Source Server Version : 50544
+ Source Host           : 115.159.22.98
  Source Database       : libsys
 
- Target Server Type    : MySQL
- Target Server Version : 50711
+ Target Server Type    : MariaDB
+ Target Server Version : 50544
  File Encoding         : utf-8
 
- Date: 05/06/2016 22:50:52 PM
+ Date: 05/06/2016 22:58:50 PM
 */
 
 SET NAMES utf8;
@@ -32,16 +32,16 @@ CREATE TABLE `libsys_category` (
 -- ----------------------------
 DROP TABLE IF EXISTS `libsys_exam`;
 CREATE TABLE `libsys_exam` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `uid` int(11) NOT NULL,
-  `answer_str` text NOT NULL,
-  `topicid_str` text NOT NULL,
-  `scores_str` text NOT NULL,
-  `score` tinyint(4) NOT NULL,
-  `begin_time` int(11) NOT NULL,
-  `end_time` int(11) NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '主键，自增 ID',
+  `uid` int(11) NOT NULL COMMENT '考试用户 ID',
+  `answer_str` text NOT NULL COMMENT '答题答案列表，格式：A,C,B....',
+  `topicid_str` text NOT NULL COMMENT '考试题目 ID 列表，格式：1,2,3,4....',
+  `scores_str` text NOT NULL COMMENT '考试每题分值列表，格式：5,5,5,5.....',
+  `score` tinyint(4) NOT NULL COMMENT '最后考试成绩',
+  `begin_time` int(11) NOT NULL COMMENT '开始考试时间，时间戳',
+  `end_time` int(11) NOT NULL COMMENT '结束考试时间，时间戳',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC COMMENT='考试数据表';
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC COMMENT='考试数据表';
 
 -- ----------------------------
 --  Table structure for `libsys_position`
@@ -52,23 +52,6 @@ CREATE TABLE `libsys_position` (
   `positionname` varchar(15) NOT NULL DEFAULT '' COMMENT '岗位名',
   PRIMARY KEY (`positionid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT COMMENT='岗位表';
-
--- ----------------------------
---  Table structure for `libsys_question`
--- ----------------------------
-DROP TABLE IF EXISTS `libsys_question`;
-CREATE TABLE `libsys_question` (
-  `id` int(11) NOT NULL,
-  `subject` varchar(255) NOT NULL,
-  `content` text NOT NULL,
-  `option_a` varchar(255) NOT NULL,
-  `option_b` varchar(255) NOT NULL,
-  `option_c` varchar(255) NOT NULL,
-  `option_d` varchar(255) NOT NULL,
-  `category` tinyint(4) NOT NULL,
-  `answer` varchar(255) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC COMMENT='题库';
 
 -- ----------------------------
 --  Table structure for `libsys_setting`
@@ -85,16 +68,16 @@ CREATE TABLE `libsys_setting` (
 -- ----------------------------
 DROP TABLE IF EXISTS `libsys_topic`;
 CREATE TABLE `libsys_topic` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `subject` varchar(255) NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '主键，自增 ID',
+  `subject` varchar(255) NOT NULL COMMENT '题目',
   `categoryid` tinyint(4) NOT NULL DEFAULT '0' COMMENT '题目分类',
-  `option_a` varchar(255) NOT NULL,
-  `option_b` varchar(255) NOT NULL,
-  `option_c` varchar(255) NOT NULL,
-  `option_d` varchar(255) NOT NULL,
-  `answer` varchar(255) NOT NULL,
+  `option_a` varchar(255) NOT NULL DEFAULT '' COMMENT '选项 A',
+  `option_b` varchar(255) NOT NULL DEFAULT '' COMMENT '选项 B',
+  `option_c` varchar(255) NOT NULL DEFAULT '' COMMENT '选项 C',
+  `option_d` varchar(255) NOT NULL DEFAULT '' COMMENT '选项 D',
+  `answer` varchar(255) NOT NULL COMMENT '正确答案',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=402 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT COMMENT='题库';
+) ENGINE=InnoDB AUTO_INCREMENT=401 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT COMMENT='题库';
 
 -- ----------------------------
 --  Table structure for `libsys_user`
@@ -113,6 +96,6 @@ CREATE TABLE `libsys_user` (
   `permission` tinyint(4) NOT NULL DEFAULT '3' COMMENT '权限等级：1 超管、2 普管、3 学生',
   `extra` text NOT NULL COMMENT '额外参数，序列化存储',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT COMMENT='用户表';
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT COMMENT='用户表';
 
 SET FOREIGN_KEY_CHECKS = 1;

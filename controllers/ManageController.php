@@ -60,20 +60,27 @@ class ManageController extends Controller
         return $this->render( 'topic', [
             'topicArr'  => $topicList['topicArr'],
             'pages'     => $topicList['pages'],
-            'isImport'  => $isImport,
         ] );
+    }
+
+    /**
+     * 添加题目
+     */
+    public function actionAddtopic()
+    {
+        return $this->render( 'addtopic', ['categoryArr' => Category::getAllCategory()] );
     }
 
     /**
      * 题目编辑
      */
-    public function actionTopicedit()
+    public function actionEdittopic()
     {
         $topicid = yii::$app->request->getQueryParam( 'topicid' );
         if ( empty( $topicid ) )
             $this->redirect( ['error', 'name' => Html::encode( '非法的参数' ), 'msg' => '请检查提交的参数是否正确'] );
 
-        return $this->render( 'topicedit', [
+        return $this->render( 'edittopic', [
             'topic'         => Topic::getOneTopic( $topicid ),
             'categoryArr'   => Category::getAllCategory(),
         ] );

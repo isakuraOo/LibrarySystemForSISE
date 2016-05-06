@@ -19,6 +19,7 @@ class ApiController extends Controller
 {
     /**
      * 动作执行前的过滤
+     * 过滤整个控制器的调用方式，必须通过 ajax 来调用该控制器提供的方法
      */
     public function beforeAction( $action )
     {
@@ -31,6 +32,7 @@ class ApiController extends Controller
 
     /**
      * 保存文章
+     * 该接口方法在 manage/article 视图中被调用到
      * @return json 调用结果
      */
     public function actionSavearticle()
@@ -40,7 +42,7 @@ class ApiController extends Controller
             yii::$app->message->ajaxReturnError( '标题、正文 内容不能为空' );
         else
         {
-            $value = serialize( ['title' => Html::encode( $post['title'] ), 'content' => $post['content']] );
+            $value = serialize( ['title' => Html::encode( $post['title'] ), 'content' => Html::encode( $post['content'] )] );
             $updateRes = Setting::updateOneValueByKey( 'article', $value );
             if ( $updateRes )
                 yii::$app->message->ajaxReturnSuccess( '更新成功' );
@@ -51,6 +53,7 @@ class ApiController extends Controller
 
     /**
      * 保存首页公告
+     * 该接口方法在 manage/article 视图中被调用到
      * @return json 调用结果
      */
     public function actionSaveindexnotify()
@@ -72,6 +75,7 @@ class ApiController extends Controller
 
     /**
      * 更新用户数据
+     * 该接口方法在 manage/useredit 视图中被调用到
      * @return json 调用结果
      */
     public function actionUpdateuser()
@@ -121,6 +125,7 @@ class ApiController extends Controller
 
     /**
      * 添加一个管理员用户
+     * 该接口方法在 manage/adduser 视图中被调用到
      * @return json 调用结果
      */
     public function actionAddmanager()
@@ -148,10 +153,44 @@ class ApiController extends Controller
     }
 
     /**
-     * 更新一条题目数据
+     * 添加一条题目数据
+     * 该接口方法在 manage/addtopic 视图中被调用到
      * @return json 调用结果
      */
-    public function actionUpdatetopic()
+    public function actionAddonetopic()
+    {
+        $post = yii::$app->request->post();
+        if ( !isset( $post['categoryid'] ) || !isset( $post['subject'] ) || !isset( $post['option_a'] ) || !isset( $post['option_b'] ) || !isset( $post['option_c'] ) || !isset( $post['option_d'] ) || !isset( $post['answer'] ) )
+            yii::$app->message->ajaxReturnError( '提交的参数有误' );
+
+        if ( empty( $post['subject'] ) || empty( $post['answer'] || empty( $post['categoryid'] ) ) )
+            yii::$app->message->ajaxReturnError( '添加的内容不能为空' );
+
+        if ( empty( Category::findOne( $post['categoryid'] ) ) )
+            yii::$app->message->ajaxReturnError( '添加失败' );
+
+        $attributes = [
+            'subject'       => Html::encode( $post['subject'] ),
+            'categoryid'    => intval( $post['categoryid'] ),
+            'option_a'      => Html::encode( $post['option_a'] ),
+            'option_b'      => Html::encode( $post['option_b'] ),
+            'option_c'      => Html::encode( $post['option_c'] ),
+            'option_d'      => Html::encode( $post['option_d'] ),
+            'answer'        => Html::encode( $post['answer'] ),
+        ];
+        $addRes = Topic::addOneTopic( $attributes );
+        if ( $addRes )
+            yii::$app->message->ajaxReturnSuccess( '更新成功' );
+        else
+            yii::$app->message->ajaxReturnError( '更新失败' );
+    }
+
+    /**
+     * 更新一条题目数据
+     * 该接口方法在 manage/topicedit 视图中被调用到
+     * @return json 调用结果
+     */
+    public function actionUpdateonetopic()
     {
         $post = yii::$app->request->post();
         if ( !isset( $post['topicid'] ) || empty( $post['topicid'] ) || !isset( $post['categoryid'] ) || !isset( $post['subject'] ) || !isset( $post['option_a'] ) || !isset( $post['option_b'] ) || !isset( $post['option_c'] ) || !isset( $post['option_d'] ) || !isset( $post['answer'] ) )
@@ -181,6 +220,7 @@ class ApiController extends Controller
 
     /**
      * 更新考试题目设置
+     * 该接口方法在 manage/exam 视图中被调用到
      * @return json 调用结果
      */
     public function actionUpdateexamrule()

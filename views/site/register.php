@@ -44,20 +44,6 @@ $(document).ready(function(){
 
                     <?= $form->field( $userForm, 'passwordAgain' )->passwordInput() ?>
 
-                    <div class="form-group field-userfrorm-email required">
-                        <label class="control-label" for="userfrorm-email">邮箱</label>
-                        <div class="input-group">
-                            <input type="text" id="userfrorm-email" class="form-control" name="UserFrorm[email]">
-
-                            <span class="input-group-btn">
-                                <button class="btn btn-default" type="button" id="get-captcha-button">获取验证码</button>
-                            </span>
-                        </div>
-                        <p class="help-block help-block-error"></p>
-                    </div>
-
-                    <?= $form->field( $userForm, 'captcha' ) ?>
-
                     <?= $form->field( $userForm, 'stunum' ) ?>
 
                     <?= $form->field( $userForm, 'grade' ) ?>

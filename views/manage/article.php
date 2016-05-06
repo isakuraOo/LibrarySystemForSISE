@@ -30,7 +30,7 @@ $(document).ready(function(){
         $.ajax({
             url: '<?= Url::to( ['api/savearticle'] ) ?>',
             type: 'post',
-            data: { _csrf: $('input[name=_csrf]').val(), title: $('#article-title').val(), content: ue.getContent() },
+            data: { _csrf: $('input[name=_csrf]').val(), title: $('#article-title').val(), content: $('#article-content').val() },
             dataType: 'json',
             error: function( data ) {
                 notify( data );
@@ -71,7 +71,7 @@ $(document).ready(function(){
             </div>
         <div class="form-group">
             <label for="article-content">考试须知-内容</label>
-            <textarea name="article-content" id="article-content" cols="30" rows="20"><?= $content ?></textarea>
+            <textarea class="form-control" name="article-content" id="article-content" cols="30" rows="20"><?= $content ?></textarea>
         </div>
         <button class="btn btn-primary" name="article-submit" id="article-submit">提交</button>
 

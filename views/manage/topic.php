@@ -21,16 +21,8 @@ $this->title = '题库管理';
             ]);
         ?>
         <div class="form-group">
-            <button class="btn btn-primary" type="button" name="add-topic" id="add-topic">添加题目</button>
+            <a href="<?= Url::to( ['manage/addtopic'] ) ?>"><button class="btn btn-primary" type="button" name="add-topic" id="add-topic">添加题目</button></a>
         </div>
-
-        <?php if ( $isImport === TRUE ): ?>
-        <div class="col-xs-8" id="progress-div">
-            <div class="progress">
-                <div class="progress-bar progress-bar-success" id="import-progress" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="<?= count( yii::$app->session->get( 'topicArr' ) ) ?>" style="width: 0%; min-width: 2em;">0%</div>
-            </div>
-        </div>
-        <?php endif; ?>
 
         <?php ActiveForm::end(); ?>
 
@@ -46,7 +38,7 @@ $this->title = '题库管理';
                         <td><?= $topic['subject'] ?></td>
                         <td><?= $topic['category']['categoryname'] ?></td>
                         <td>
-                            <a href="<?= Url::to( ['manage/topicedit', 'topicid' => $topic['id']] ) ?>"><button class="btn btn-default btn-xs"><span class="glyphicon glyphicon-tasks" aria-hidden="true"></span> 编辑</button></a>
+                            <a href="<?= Url::to( ['manage/edittopic', 'topicid' => $topic['id']] ) ?>"><button class="btn btn-default btn-xs"><span class="glyphicon glyphicon-tasks" aria-hidden="true"></span> 编辑</button></a>
                         </td>
                     </tr>
                 <?php endforeach; ?>

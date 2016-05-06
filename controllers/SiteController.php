@@ -218,9 +218,9 @@ class SiteController extends Controller
     /**
      * 错误提示动作
      */
-    public function actionError()
-    {
-        $params = yii::$app->request->getQueryParams();
-        return $this->render( 'error', ['name' => $params['name'], 'message' => $params['msg']] );
-    }
+    // public function actionError()
+    // {
+    //     $params = yii::$app->request->getQueryParams();
+    //     return $this->render( 'error', ['name' => $params['name'], 'message' => $params['msg']] );
+    // }
 }

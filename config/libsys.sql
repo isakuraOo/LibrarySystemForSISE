@@ -27,6 +27,8 @@ CREATE TABLE `libsys_category` (
   PRIMARY KEY (`categoryid`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1 ROW_FORMAT=COMPACT COMMENT='题目分类数据表';
 
+INSERT INTO `libsys_category` VALUES (1, '参考咨询');
+
 -- ----------------------------
 --  Table structure for `libsys_exam`
 -- ----------------------------
@@ -63,6 +65,10 @@ CREATE TABLE `libsys_setting` (
   PRIMARY KEY (`key`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT COMMENT='系统配置';
 
+INSERT INTO `libsys_setting` VALUES ('article', 'a:2:{s:5:"title";s:12:"考试须知";s:7:"content";s:141:"考试需要登录后才能进行，管理员可在后台进行题库信息的管理、考试规则的管理以及考试信息统计的查看";}');
+INSERT INTO `libsys_setting` VALUES ('examrule', 'a:0:{}');
+INSERT INTO `libsys_setting` VALUES ('index', 'a:1:{s:6:"notify";s:58:"欢迎使用该系统，超管账号密码：libsys 123456";}');
+
 -- ----------------------------
 --  Table structure for `libsys_topic`
 -- ----------------------------
@@ -97,5 +103,7 @@ CREATE TABLE `libsys_user` (
   `extra` text NOT NULL COMMENT '额外参数，序列化存储',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT COMMENT='用户表';
+
+INSERT INTO `libsys_user`(`username`, `password`, `salt`, `name`, `status`, `permission`) VALUES ('libsys', '0d8e4152fe8f8c2558ca89a788bb399a', 'libsys', '系统超级管理员', 1, 1);
 
 SET FOREIGN_KEY_CHECKS = 1;
